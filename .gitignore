@@ -1,0 +1,15 @@
+# Build outputs (per plugin project)
+build/
+dist/
+
+# Locally installed toolchain helpers (zig venv, host_sim binary, docker marker)
+.sdk-tools/
+
+
+# Python
+__pycache__/
+*.pyc
+
+# OS cruft
+.DS_Store
+Thumbs.db

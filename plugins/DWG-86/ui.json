@@ -1,0 +1,75 @@
+{
+  "kit": "amber",
+  "pages": [
+    { "name": "OSC",
+      "controls": [
+        { "param": "Osc1 Wave",  "widget": "slider", "overlay": "menu" },
+        { "param": "Osc1 Level", "widget": "fader" },
+        { "param": "Osc2 Wave",  "widget": "slider", "overlay": "menu" },
+        { "param": "Osc2 Level", "widget": "fader" },
+        { "param": "Osc1 Oct",   "widget": "switch" },
+        { "param": "Osc2 Oct",   "widget": "switch" },
+        { "param": "Interval",   "widget": "slider", "overlay": "menu" },
+        { "param": "Detune",     "widget": "knob" },
+        { "param": "Noise",      "widget": "fader" },
+        { "param": "Assign",     "widget": "switch" },
+        { "param": "Uni Detune", "widget": "knob", "visibleWhen": { "param": "Assign", "choice": "Unison" } },
+        { "param": "Portamento", "widget": "knob" }
+      ] },
+    { "name": "VCF",
+      "controls": [
+        { "param": "Cutoff",    "widget": "knob" },
+        { "param": "Resonance", "widget": "knob" },
+        { "param": "EG Amount", "widget": "knob", "polarity": "bipolar" },
+        { "param": "Key Track", "widget": "switch" },
+        { "param": "VCF Velo",  "widget": "knob" },
+        { "param": "MG>VCF",    "widget": "knob" },
+        { "param": "AT>VCF",    "widget": "knob" },
+        { "param": "Bend>VCF",  "widget": "switch" }
+      ] },
+    { "name": "ENV",
+      "controls": [
+        { "param": "F Attack",  "widget": "fader" },
+        { "param": "F Decay",   "widget": "fader" },
+        { "param": "F Break",   "widget": "fader" },
+        { "param": "F Slope",   "widget": "fader" },
+        { "param": "F Sustain", "widget": "fader" },
+        { "param": "F Release", "widget": "fader" },
+        { "param": "EG Amount", "widget": "knob", "polarity": "bipolar" },
+        { "param": "VCF Velo",  "widget": "knob" },
+        { "param": "A Attack",  "widget": "fader" },
+        { "param": "A Decay",   "widget": "fader" },
+        { "param": "A Break",   "widget": "fader" },
+        { "param": "A Slope",   "widget": "fader" },
+        { "param": "A Sustain", "widget": "fader" },
+        { "param": "A Release", "widget": "fader" },
+        { "param": "VCA Velo",  "widget": "knob" },
+        { "param": "AT>VCA",    "widget": "knob" }
+      ] },
+    { "name": "MOD",
+      "controls": [
+        { "param": "MG Wave",    "widget": "switch" },
+        { "param": "MG Rate",    "widget": "knob" },
+        { "param": "MG Delay",   "widget": "knob" },
+        { "param": "MG>Osc",     "widget": "knob" },
+        { "param": "Wheel>MG",   "widget": "knob" },
+        { "param": "AT>Vibrato", "widget": "knob" },
+        { "param": "Bend Range", "widget": "knob" },
+        { "param": "MG>VCF",     "widget": "knob" },
+        { "param": "AB Select",  "widget": "switch" },
+        { "param": "AB Mode",    "widget": "switch" },
+        { "param": "AB Time",    "widget": "knob" },
+        { "param": "AB Amount",  "widget": "knob" }
+      ] },
+    { "name": "DELAY",
+      "controls": [
+        { "param": "Dly Time",   "widget": "knob" },
+        { "param": "Dly Fdbk",   "widget": "knob" },
+        { "param": "Dly Level",  "widget": "fader" },
+        { "param": "Volume",     "widget": "fader" },
+        { "param": "Dly Mod Rt", "widget": "knob" },
+        { "param": "Dly Mod",    "widget": "knob" },
+        "empty", "empty"
+      ] }
+  ]
+}

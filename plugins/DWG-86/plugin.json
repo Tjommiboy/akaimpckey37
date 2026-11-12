@@ -1,0 +1,17 @@
+{
+  "name": "DWG-86",
+  "manufacturer": "uP2noGood",
+  "version": "1.0.0",
+  "format": "vst2",
+  "kind": "instrument",
+  "uid": "UmrE",
+  "numInputs": 0,
+  "numOutputs": 2,
+  "category": "Synth",
+  "file32": "VST/dwg-86-arm32.so",
+  "file64": "VST/dwg-86-arm64.so",
+  "description": "8-voice hybrid synth in the spirit of the Korg DW-6000 / DW-8000: 16 digital waveforms, 24 dB resonant low-pass, six-stage envelopes, auto bend, delayable MG, unison and a modulated digital delay.",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}
