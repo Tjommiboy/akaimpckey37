@@ -1,0 +1,48 @@
+{
+  "kit": "cyan",
+  "pages": [
+    { "name": "B1-2",
+      "controls": [
+        { "param": "1 Freq",  "widget": "knob" },
+        { "param": "1 Gain",  "widget": "knob", "polarity": "bipolar" },
+        { "param": "1 Q",     "widget": "knob" },
+        { "param": "1 Shape", "widget": "slider", "overlay": "menu" },
+        { "param": "1 Slope", "widget": "slider", "overlay": "menu" },
+        { "param": "1 On",    "widget": "switch" },
+        "empty", "empty",
+        { "param": "2 Freq",  "widget": "knob" },
+        { "param": "2 Gain",  "widget": "knob", "polarity": "bipolar" },
+        { "param": "2 Q",     "widget": "knob" },
+        { "param": "2 Shape", "widget": "slider", "overlay": "menu" },
+        { "param": "2 Slope", "widget": "slider", "overlay": "menu" },
+        { "param": "2 On",    "widget": "switch" },
+        "empty", "empty"
+      ] },
+    { "name": "B3-4",
+      "controls": [
+        { "param": "3 Freq",  "widget": "knob" },
+        { "param": "3 Gain",  "widget": "knob", "polarity": "bipolar" },
+        { "param": "3 Q",     "widget": "knob" },
+        { "param": "3 Shape", "widget": "slider", "overlay": "menu" },
+        { "param": "3 Slope", "widget": "slider", "overlay": "menu" },
+        { "param": "3 On",    "widget": "switch" },
+        "empty", "empty",
+        { "param": "4 Freq",  "widget": "knob" },
+        { "param": "4 Gain",  "widget": "knob", "polarity": "bipolar" },
+        { "param": "4 Q",     "widget": "knob" },
+        { "param": "4 Shape", "widget": "slider", "overlay": "menu" },
+        { "param": "4 Slope", "widget": "slider", "overlay": "menu" },
+        { "param": "4 On",    "widget": "switch" },
+        "empty", "empty"
+      ] },
+    { "name": "SETUP",
+      "controls": [
+        { "param": "Output",   "widget": "fader" },
+        { "param": "Analyzer", "widget": "switch" },
+        { "param": "Speed",    "widget": "switch" },
+        { "param": "Ana Tilt", "widget": "switch" },
+        { "param": "Refresh",  "widget": "switch" },
+        "empty", "empty", "empty"
+      ] }
+  ]
+}
