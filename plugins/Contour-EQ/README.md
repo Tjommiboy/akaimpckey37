@@ -1,4 +1,4 @@
-# Contour EQ (test build 0.2)
+# Contour EQ (test build 0.3)
 
 A visual 4-band EQ for the MPC by **uP2noGood**. The MPC does not let plugins draw their own graphics, so the EQ curve is drawn as **160 bars** whose heights the plugin sets, with a live **spectrum analyzer** (dim bars) behind them and a **draggable dot** for every band.
 
@@ -21,6 +21,13 @@ Shapes: Bell, Low Shelf, High Shelf, Low Cut, High Cut (6-48 dB/oct, Q adds reso
 
 - The bars are **Meter widgets**, which the MPC is meant to animate. The EQ curve is drawn as each meter's peak marker (a bright line), and the analyzer bars have peak hold.
 - **SETUP → Refresh** has three options if the graph still freezes: *Normal* (meters only), *Display* (asks the MPC to re-read every value ~25 times a second), and *Notify* (reports each changed bar to the MPC like a knob turn). Both run on a separate thread, never on the audio thread.
+
+## Changes in 0.3
+
+0.2 on a Key 37: still no live redraw in any Refresh mode; the picture is right when the page is reopened. In 0.3:
+
+- Filled bars are back (the EQ fills from 0 dB, the analyzer from the bottom).
+- The display parameters are now **automatable** and **Refresh defaults to Notify**: the MPC may ignore change reports for parameters that cannot be automated. Side effect: 320 "EQ n" / "Spec n" entries in the automation parameter list. Do not record automation with Refresh on Notify.
 
 ## What to check on the MPC
 

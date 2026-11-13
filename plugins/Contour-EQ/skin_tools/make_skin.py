@@ -148,17 +148,14 @@ def graph_tab(name, step, template_tab, fn_key):
     pitch = GW / N_BARS * step
     barw = max(2.0, pitch - 2.0)
     comps = [entry("background", "Image", {"version": 2, "imageType": "Regular", "colour": "0", "image": "graph_bg.png"}, "0 0 1280 628")]
-    bw = int(round(barw))
-    blank, spec, eqfill = "blank_%d.png" % bw, "spec_%d.png" % bw, "eqfill_%d.png" % bw
+    # 0.3: filled bars again (ColourBar sliders, EQ filled from 0 dB). Untouchable: the selected
+    # band's XYPad lies on top of the whole graph.
     for i in range(0, N_BARS, step):
-        x = GX + (i // step) * pitch + (pitch - bw) / 2
-        sp = "Parameter %d" % (FIRST_SP + i)
-        comps.append(entry("spec %d" % i, "Meter", meter(spec, sp, blank, sp, "Hold/" + sp, 2, "ff4f7fa3", blank), r(x, GY + 1, bw, GH - 2)))
+        x = GX + (i // step) * pitch + (pitch - barw) / 2
+        comps.append(entry("spec %d" % i, "Slider", colour_bar("Parameter %d" % (FIRST_SP + i), SPEC_COL, False), r(x, GY + 1, barw, GH - 2)))
     for i in range(0, N_BARS, step):
-        x = GX + (i // step) * pitch + (pitch - bw) / 2
-        eq = "Parameter %d" % (FIRST_EQ + i)
-        # the EQ curve is each meter's peak-hold marker, bound straight to the EQ value (no hold)
-        comps.append(entry("eq %d" % i, "Meter", meter(blank, eq, blank, eq, eq, 4, EQ_COL, blank), r(x, GY + 1, bw, GH - 2)))
+        x = GX + (i // step) * pitch + (pitch - barw) / 2
+        comps.append(entry("eq %d" % i, "Slider", colour_bar("Parameter %d" % (FIRST_EQ + i), EQ_COL, True), r(x, GY + 1, barw, GH - 2)))
     # dots: XYPads over the whole graph, x = Freq (log), y = Gain. Passive ones first, then the
     # selected band's pad on top; it is the only one that receives touches.
     graph = r(GX, GY, GW, GH)

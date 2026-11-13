@@ -155,7 +155,7 @@ public:
         info.name         = "Contour EQ";
         info.vendor       = "uP2noGood";
         info.uniqueId     = MPC_FOURCC(kUid[0], kUid[1], kUid[2], kUid[3]);   // must match plugin.json "uid"
-        info.version      = 200;     // 0.2.0.0 - test build
+        info.version      = 300;     // 0.3.0.0 - test build
         info.isInstrument = false;
         info.numInputs    = 2;
         info.numOutputs   = 2;
@@ -184,20 +184,20 @@ public:
         addParam(choiceParam("ana", "Analyzer", {"Off", "Pre", "Post"}, 2));
         addParam(choiceParam("speed", "Speed", {"Slow", "Medium", "Fast"}, 1));
         addParam(choiceParam("tilt", "Ana Tilt", {"0 dB", "3 dB", "4.5 dB"}, 2));
-        addParam(choiceParam("refresh", "Refresh", {"Normal", "Display", "Notify"}, 0));   // test switch: how to make the MPC redraw
+        addParam(choiceParam("refresh", "Refresh", {"Normal", "Display", "Notify"}, 2));   // test switch: how to make the MPC redraw
 
         // Display-only parameters (written by the plugin, shown as bars).
         for (int i = 0; i < kNumBars; ++i)
         {
             char id[16], nm[16];
             std::snprintf(id, sizeof id, "eq%03d", i); std::snprintf(nm, sizeof nm, "EQ %d", i + 1);
-            Param p = floatParam(id, nm, -kGraphDb, kGraphDb, 0.0f, "dB", 1); p.automatable = false; addParam(p);
+            Param p = floatParam(id, nm, -kGraphDb, kGraphDb, 0.0f, "dB", 1); p.automatable = true; addParam(p);   // 0.3 test: automatable so Notify reaches the screen
         }
         for (int i = 0; i < kNumBars; ++i)
         {
             char id[16], nm[16];
             std::snprintf(id, sizeof id, "sp%03d", i); std::snprintf(nm, sizeof nm, "Spec %d", i + 1);
-            Param p = floatParam(id, nm, kSpecFloor, kSpecTop, kSpecFloor, "dB", 0); p.automatable = false; addParam(p);
+            Param p = floatParam(id, nm, kSpecFloor, kSpecTop, kSpecFloor, "dB", 0); p.automatable = true; addParam(p);
         }
         if (numParams() != kTotalParams) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
 
