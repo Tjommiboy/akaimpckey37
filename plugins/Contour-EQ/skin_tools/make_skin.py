@@ -4,9 +4,9 @@
 The band and setup pages come from the SDK generator (ui.json -> gen_ui.py). This script then
 adds the two graph pages, which the generator cannot make:
 
-  GRAPH : 160 EQ-response bars (bipolar colour bars, 0 dB in the middle) over 160 dim analyzer
-          bars, one draggable dot per band (XYPad: x = Freq, y = Gain), and four band buttons.
-  G-80  : the same picture with every other bar, wider, to compare how the MPC copes.
+  GRAPH : EQ-response bars (160 or 80, bipolar, 0 dB in the middle) over dim analyzer bars (80 or
+          40), one draggable dot per band (XYPad: x = Freq, y = Gain), and four band buttons. The
+          bar sets switch with the Bars / Ana Bars settings (IndexedEnabling visibility).
 
 Run after a native build (it needs build/params.json):
 
@@ -26,6 +26,8 @@ OUT = os.path.join(PROJECT, "skins")
 N_BANDS, N_BARS = 4, 160
 FIRST_EQ = 29                      # parameter index of the first EQ bar (see ContourEQ.cpp)
 FIRST_SP = FIRST_EQ + N_BARS
+BARS_P = FIRST_SP + N_BARS          # "Bars" (EQ resolution: 160 / 80)
+ANA_P = BARS_P + 1                  # "Ana Bars" (analyzer resolution: 80 / 40)
 BAND_BASE, PER_BAND = 1, 6         # Freq, Gain, Q, Shape, Slope, On
 F_MIN, F_MAX, DB = 20.0, 20000.0, 18.0
 
@@ -144,18 +146,26 @@ def label(handle, text_type, colour, size, just="horizontallyCentred verticallyC
     return d
 
 
-def graph_tab(name, step, template_tab, fn_key):
+def bar_layer(kind, first, step, colour, bipolar, vis):
+    """One set of bars across the graph. Only visible while its resolution setting is chosen."""
     pitch = GW / N_BARS * step
     barw = max(2.0, pitch - 2.0)
+    out = []
+    for i in range(0, N_BARS, step):
+        x = GX + (i // step) * pitch + (pitch - barw) / 2
+        out.append(entry("%s %d/%d" % (kind, i, step), "Slider", colour_bar("Parameter %d" % (first + i), colour, bipolar),
+                         r(x, GY + 1, barw, GH - 2), invalid="Hide", extra=[vis]))
+    return out
+
+
+def graph_tab(name, template_tab, fn_key):
     comps = [entry("background", "Image", {"version": 2, "imageType": "Regular", "colour": "0", "image": "graph_bg.png"}, "0 0 1280 628")]
-    # 0.3: filled bars again (ColourBar sliders, EQ filled from 0 dB). Untouchable: the selected
-    # band's XYPad lies on top of the whole graph.
-    for i in range(0, N_BARS, step):
-        x = GX + (i // step) * pitch + (pitch - barw) / 2
-        comps.append(entry("spec %d" % i, "Slider", colour_bar("Parameter %d" % (FIRST_SP + i), SPEC_COL, False), r(x, GY + 1, barw, GH - 2)))
-    for i in range(0, N_BARS, step):
-        x = GX + (i // step) * pitch + (pitch - barw) / 2
-        comps.append(entry("eq %d" % i, "Slider", colour_bar("Parameter %d" % (FIRST_EQ + i), EQ_COL, True), r(x, GY + 1, barw, GH - 2)))
+    # analyzer behind: 80 or 40 bars ("Ana Bars"), each bound to the first parameter of its group
+    comps += bar_layer("spec", FIRST_SP, 2, SPEC_COL, False, "IndexedEnabling/0/2/Parameter %d" % ANA_P)
+    comps += bar_layer("spec", FIRST_SP, 4, SPEC_COL, False, "IndexedEnabling/1/2/Parameter %d" % ANA_P)
+    # EQ curve in front: 160 or 80 bars ("Bars")
+    comps += bar_layer("eq", FIRST_EQ, 1, EQ_COL, True, "IndexedEnabling/0/2/Parameter %d" % BARS_P)
+    comps += bar_layer("eq", FIRST_EQ, 2, EQ_COL, True, "IndexedEnabling/1/2/Parameter %d" % BARS_P)
     # dots: XYPads over the whole graph, x = Freq (log), y = Gain. Passive ones first, then the
     # selected band's pad on top; it is the only one that receives touches.
     graph = r(GX, GY, GW, GH)
@@ -213,14 +223,14 @@ def main():
     pd = tui["pageData"]
     tabs = pd["tabs"]
     template = tabs[0]
-    new_tabs = [graph_tab("GRAPH", 1, template, 0), graph_tab("G-80", 2, template, 1)]
+    new_tabs = [graph_tab("GRAPH", template, 0)]
     for t in tabs:
-        t["fnKeyIndex"] += 2
+        t["fnKeyIndex"] += 1
     pd["tabs"] = new_tabs + tabs
 
     for m in ql["Screen Mode Q-Links"]["map"]:
-        m["Tab"] += 2
-    ql["Screen Mode Q-Links"]["map"] = [graph_qlinks(1), graph_qlinks(2)] + ql["Screen Mode Q-Links"]["map"]
+        m["Tab"] += 1
+    ql["Screen Mode Q-Links"]["map"] = [graph_qlinks(1)] + ql["Screen Mode Q-Links"]["map"]
     prog = {}
     for b in range(N_BANDS):                      # Program mode knobs: the same band columns
         base = BAND_BASE + b * PER_BAND

@@ -43,7 +43,8 @@
         { "param": "Ana Tilt", "widget": "switch" },
         { "param": "Refresh",  "widget": "switch" },
         { "param": "Bars",     "widget": "switch" },
-        "empty", "empty"
+        { "param": "Ana Bars", "widget": "switch" },
+        "empty"
       ] }
   ]
 }

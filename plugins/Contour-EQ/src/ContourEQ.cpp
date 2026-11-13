@@ -147,6 +147,7 @@ public:
     static constexpr int kFirstSpecBar = kFirstEqBar + kNumBars;
     static constexpr int kTotalParams  = kFirstSpecBar + kNumBars;
     static constexpr int kBarsParam    = kTotalParams;          // appended after the display parameters
+    static constexpr int kAnaBarsParam = kTotalParams + 1;
 
     static int bandParam(int band, int which) { return kBandBase + band * kPerBand + which; }
 
@@ -156,7 +157,7 @@ public:
         info.name         = "Contour EQ";
         info.vendor       = "uP2noGood";
         info.uniqueId     = MPC_FOURCC(kUid[0], kUid[1], kUid[2], kUid[3]);   // must match plugin.json "uid"
-        info.version      = 400;     // 0.4.0.0 - test build
+        info.version      = 500;     // 0.5.0.0 - test build
         info.isInstrument = false;
         info.numInputs    = 2;
         info.numOutputs   = 2;
@@ -200,8 +201,9 @@ public:
             std::snprintf(id, sizeof id, "sp%03d", i); std::snprintf(nm, sizeof nm, "Spec %d", i + 1);
             Param p = floatParam(id, nm, kSpecFloor, kSpecTop, kSpecFloor, "dB", 0); p.automatable = true; addParam(p);
         }
-        addParam(choiceParam("bars", "Bars", {"160", "80"}, 0));   // 0.4: index kBarsParam, appended last
-        if (numParams() != kTotalParams + 1) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
+        addParam(choiceParam("bars", "Bars", {"160", "80"}, 1));      // EQ curve resolution (0.4, appended last)
+        addParam(choiceParam("anabars", "Ana Bars", {"80", "40"}, 0)); // analyzer resolution (0.5)
+        if (numParams() != kTotalParams + 2) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
 
         addPrograms();
     }
@@ -425,7 +427,19 @@ private:
             for (int i = 0; i <= kFftSize / 2; ++i) { const float a = re_[(size_t)i] * scale, b = im_[(size_t)i] * scale; re_[(size_t)i] = a * a + b * b; }
             barsFrom(0, kNumBars / 2);
         }
-        else { barsFrom(kNumBars / 2, kNumBars); specActive_ = true; specFresh_ = true; anaStep_ = -1; return; }
+        else
+        {
+            barsFrom(kNumBars / 2, kNumBars);
+            // The screen shows 80 or 40 analyzer bars: each shown bar carries the loudest of its group.
+            const int g = getInt(kAnaBarsParam) == 1 ? 4 : 2;
+            for (int i = 0; i < kNumBars; i += g)
+            {
+                float m = specDb_[i];
+                for (int k = 1; k < g; ++k) m = std::max(m, specDb_[i + k]);
+                set(kFirstSpecBar + i, m);
+            }
+            specActive_ = true; specFresh_ = true; anaStep_ = -1; return;
+        }
         ++anaStep_;
     }
 
@@ -442,7 +456,6 @@ private:
             float db = 10.0f * std::log10(p + 1.0e-12f) + tilt * barOct_[i];
             db = clamp(db, kSpecFloor, kSpecTop + 6.0f);
             specDb_[i] = db > specDb_[i] ? db : specDb_[i] + (db - specDb_[i]) * r;
-            set(kFirstSpecBar + i, specDb_[i]);
         }
     }
 
@@ -452,23 +465,39 @@ private:
     //   Notify  : report each display parameter that moved, like a knob turn (audioMasterAutomate)
     void notifierLoop()
     {
-        float sent[2 * kNumBars];
-        for (float& v : sent) v = -1.0f;
+        // Only the bars on screen are reported (EQ: 160 or 80, analyzer: 80 or 40). A bar is
+        // reported when it moved about a pixel, and once more when it comes to rest, so none is
+        // left showing a stale value. While the EQ curve is moving the analyzer waits, so edits
+        // get the screen's full redraw capacity.
+        float sent[2 * kNumBars], last[2 * kNumBars];
+        for (int i = 0; i < 2 * kNumBars; ++i) { sent[i] = -1.0f; last[i] = -1.0f; }
+        int quietTicks = 100;
         while (running_)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(20));   // up to 50 redraws a second
             const int mode = getInt(kRefresh);
             if (mode == 1) { requestDisplayUpdate(); continue; }
             if (mode != 2) continue;
-            const int stride = getInt(kBarsParam) == 1 ? 2 : 1;          // 80 bars: report every other one
-            for (int i = 0; i < 2 * kNumBars; ++i)
-            {
-                if ((i % kNumBars) % stride) continue;
-                const int idx = kFirstEqBar + i;
-                const float v = getNormalised(idx);
-                if (std::fabs(v - sent[i]) > 0.0023f) { sent[i] = v; notifyHostParameterChanged(idx); }   // ~1 pixel
-            }
+            const int eqStride = getInt(kBarsParam) == 1 ? 2 : 1;
+            const int spStride = getInt(kAnaBarsParam) == 1 ? 4 : 2;
+            bool eqMoved = false;
+            for (int i = 0; i < kNumBars; i += eqStride) eqMoved |= report(i, sent, last);
+            quietTicks = eqMoved ? 0 : quietTicks + 1;
+            if (quietTicks < 15) continue;                                  // analyzer pauses ~0.3 s after an edit
+            for (int i = 0; i < kNumBars; i += spStride) report(kNumBars + i, sent, last);
         }
+    }
+
+    bool report(int i, float* sent, float* last)
+    {
+        const float v = getNormalised(kFirstEqBar + i);
+        const bool moved = std::fabs(v - sent[i]) > 0.0023f;              // about one pixel
+        const bool settled = v == last[i] && v != sent[i];                 // came to rest just short of a pixel
+        last[i] = v;
+        if (!moved && !settled) return false;
+        sent[i] = v;
+        notifyHostParameterChanged(kFirstEqBar + i);
+        return moved;
     }
 
     void addPrograms()

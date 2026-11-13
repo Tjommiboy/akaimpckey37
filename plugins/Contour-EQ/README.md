@@ -9,7 +9,6 @@ This build is a hardware test: the bars, dots and analyzer are made from MPC ski
 | Page | What |
 |---|---|
 | **GRAPH** | 160-bar response + analyzer. Tap BAND 1-4 to choose which dot you drag. Q-Links: one column per band, Freq (top), Gain, Q, Shape (bottom). |
-| **G-80** | The same with 80 wider bars, to compare smoothness and screen speed. |
 | **B1-2 / B3-4** | Knobs for every band: Freq, Gain, Q, Shape, Slope, On. |
 | **SETUP** | Output, Analyzer (Off / Pre / Post), Speed, analyzer Tilt, Refresh (Normal / Force). |
 
@@ -28,6 +27,15 @@ Shapes: Bell, Low Shelf, High Shelf, Low Cut, High Cut (6-48 dB/oct, Q adds reso
 
 - Filled bars are back (the EQ fills from 0 dB, the analyzer from the bottom).
 - The display parameters are now **automatable** and **Refresh defaults to Notify**: the MPC may ignore change reports for parameters that cannot be automated. Side effect: 320 "EQ n" / "Spec n" entries in the automation parameter list. Do not record automation with Refresh on Notify.
+
+## Changes in 0.5
+
+0.4 on a Key 37: 80 bars clearly smoother than 160 (about 5-10 updates a second), so the MPC is limited by how many bars it redraws. In 0.5:
+
+- One GRAPH page; its bars follow **SETUP → Bars** (EQ curve: 160 / **80**, default 80) and **Ana Bars** (analyzer: **80** / 40). No more mismatched "shadow" bars.
+- Each analyzer bar on screen shows the loudest of its group, so nothing is missed at 40.
+- A bar that stops just short of a pixel is still redrawn once, so no stale bars are left behind.
+- The analyzer pauses for about 0.3 s while the EQ curve moves, so edits redraw first.
 
 ## What to check on the MPC
 
