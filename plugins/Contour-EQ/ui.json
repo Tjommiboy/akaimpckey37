@@ -42,7 +42,8 @@
         { "param": "Speed",    "widget": "switch" },
         { "param": "Ana Tilt", "widget": "switch" },
         { "param": "Refresh",  "widget": "switch" },
-        "empty", "empty", "empty"
+        { "param": "Bars",     "widget": "switch" },
+        "empty", "empty"
       ] }
   ]
 }

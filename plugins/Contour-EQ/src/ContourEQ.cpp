@@ -47,7 +47,7 @@ constexpr int   kMaxSect    = 4;            // biquads per band (48 dB/oct cut =
 constexpr float kGraphDb    = 18.0f;        // EQ graph spans -18 .. +18 dB (same as the Gain range)
 constexpr float kFMin       = 20.0f, kFMax = 20000.0f;
 constexpr int   kFftBits    = 11, kFftSize = 1 << kFftBits;   // 2048-point analyzer
-constexpr int   kFftHop     = 2048;         // one analysis per 2048 samples (~21 per second)
+constexpr int   kFftHop     = 1024;         // one analysis per 1024 samples (~43 per second)
 constexpr float kSpecFloor  = -90.0f, kSpecTop = 0.0f;        // analyzer range in dB
 
 enum Shape { kBell, kLowShelf, kHighShelf, kLowCut, kHighCut, kNotch, kBandPass, kTilt, kNumShapes };
@@ -146,6 +146,7 @@ public:
     enum { kAnalyzer = kBandBase + kNumBands * kPerBand, kSpeed, kTiltSpec, kRefresh, kFirstEqBar };
     static constexpr int kFirstSpecBar = kFirstEqBar + kNumBars;
     static constexpr int kTotalParams  = kFirstSpecBar + kNumBars;
+    static constexpr int kBarsParam    = kTotalParams;          // appended after the display parameters
 
     static int bandParam(int band, int which) { return kBandBase + band * kPerBand + which; }
 
@@ -155,7 +156,7 @@ public:
         info.name         = "Contour EQ";
         info.vendor       = "uP2noGood";
         info.uniqueId     = MPC_FOURCC(kUid[0], kUid[1], kUid[2], kUid[3]);   // must match plugin.json "uid"
-        info.version      = 300;     // 0.3.0.0 - test build
+        info.version      = 400;     // 0.4.0.0 - test build
         info.isInstrument = false;
         info.numInputs    = 2;
         info.numOutputs   = 2;
@@ -199,7 +200,8 @@ public:
             std::snprintf(id, sizeof id, "sp%03d", i); std::snprintf(nm, sizeof nm, "Spec %d", i + 1);
             Param p = floatParam(id, nm, kSpecFloor, kSpecTop, kSpecFloor, "dB", 0); p.automatable = true; addParam(p);
         }
-        if (numParams() != kTotalParams) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
+        addParam(choiceParam("bars", "Bars", {"160", "80"}, 0));   // 0.4: index kBarsParam, appended last
+        if (numParams() != kTotalParams + 1) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
 
         addPrograms();
     }
@@ -281,9 +283,12 @@ public:
         // ---- display parameters ----
         sinceResponse_ += n;
         if (holdDisplay_ > 0) { holdDisplay_ -= n; return; }
-        analyseStep();
+        {   // enough analysis steps per block to finish one frame within a hop, whatever the block size
+            const int steps = std::max(1, (int)std::ceil((float)(kFftBits + 3) * (float)n / (float)kFftHop));
+            for (int k = 0; k < steps && anaStep_ >= 0; ++k) analyseStep();
+        }
         bool wroteSomething = false;
-        if (responseDirty_ && sinceResponse_ >= (int)(0.03f * sr_)) { writeResponse(); responseDirty_ = false; sinceResponse_ = 0; wroteSomething = true; }
+        if (responseDirty_ && sinceResponse_ >= (int)(0.015f * sr_)) { writeResponse(); responseDirty_ = false; sinceResponse_ = 0; wroteSomething = true; }
         if (ana == 0 && specActive_) { for (int i = 0; i < kNumBars; ++i) { specDb_[i] = kSpecFloor; setNormalised(kFirstSpecBar + i, 0.0f); } specActive_ = false; wroteSomething = true; }
         if (specFresh_) { specFresh_ = false; wroteSomething = true; }
         (void)wroteSomething;   // redraw requests are made by the notifier thread, never from here
@@ -449,20 +454,19 @@ private:
     {
         float sent[2 * kNumBars];
         for (float& v : sent) v = -1.0f;
-        int tick = 0;
         while (running_)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));   // up to 50 redraws a second
             const int mode = getInt(kRefresh);
             if (mode == 1) { requestDisplayUpdate(); continue; }
             if (mode != 2) continue;
-            const bool doSpec = (++tick & 1) == 0;                 // analyzer at ~12 Hz, EQ at ~25 Hz
+            const int stride = getInt(kBarsParam) == 1 ? 2 : 1;          // 80 bars: report every other one
             for (int i = 0; i < 2 * kNumBars; ++i)
             {
-                if (i >= kNumBars && !doSpec) break;
+                if ((i % kNumBars) % stride) continue;
                 const int idx = kFirstEqBar + i;
                 const float v = getNormalised(idx);
-                if (std::fabs(v - sent[i]) > (i < kNumBars ? 0.0005f : 0.004f)) { sent[i] = v; notifyHostParameterChanged(idx); }
+                if (std::fabs(v - sent[i]) > 0.0023f) { sent[i] = v; notifyHostParameterChanged(idx); }   // ~1 pixel
             }
         }
     }
