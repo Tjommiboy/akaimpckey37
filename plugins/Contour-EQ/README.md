@@ -37,6 +37,12 @@ Shapes: Bell, Low Shelf, High Shelf, Low Cut, High Cut (6-48 dB/oct, Q adds reso
 - A bar that stops just short of a pixel is still redrawn once, so no stale bars are left behind.
 - The analyzer pauses for about 0.3 s while the EQ curve moves, so edits redraw first.
 
+## Changes in 0.6
+
+- Quick selectors under the graph: **ANALYZER Off / Pre / Post** and **DISPLAY Smooth / Fast**.
+- **Fast** redraws a bar only when it moves about 3 pixels (Smooth: 1) and at most 20 analyzer bars per frame, taken in turn. Fewer redraws for the MPC = higher frame rate, slightly steppier movement.
+- Turn the analyzer **Off** when you are not looking at it: the plugin cannot tell which screen you are on, so it keeps sending redraws otherwise.
+
 ## What to check on the MPC
 
 1. Do the white bars change when you turn a band's Gain or Freq on the B pages?

@@ -44,7 +44,7 @@
         { "param": "Refresh",  "widget": "switch" },
         { "param": "Bars",     "widget": "switch" },
         { "param": "Ana Bars", "widget": "switch" },
-        "empty"
+        { "param": "Display",  "widget": "switch" }
       ] }
   ]
 }

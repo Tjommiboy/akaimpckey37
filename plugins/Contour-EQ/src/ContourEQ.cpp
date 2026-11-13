@@ -148,6 +148,7 @@ public:
     static constexpr int kTotalParams  = kFirstSpecBar + kNumBars;
     static constexpr int kBarsParam    = kTotalParams;          // appended after the display parameters
     static constexpr int kAnaBarsParam = kTotalParams + 1;
+    static constexpr int kDisplayParam = kTotalParams + 2;
 
     static int bandParam(int band, int which) { return kBandBase + band * kPerBand + which; }
 
@@ -157,7 +158,7 @@ public:
         info.name         = "Contour EQ";
         info.vendor       = "uP2noGood";
         info.uniqueId     = MPC_FOURCC(kUid[0], kUid[1], kUid[2], kUid[3]);   // must match plugin.json "uid"
-        info.version      = 500;     // 0.5.0.0 - test build
+        info.version      = 600;     // 0.6.0.0 - test build
         info.isInstrument = false;
         info.numInputs    = 2;
         info.numOutputs   = 2;
@@ -203,7 +204,8 @@ public:
         }
         addParam(choiceParam("bars", "Bars", {"160", "80"}, 1));      // EQ curve resolution (0.4, appended last)
         addParam(choiceParam("anabars", "Ana Bars", {"80", "40"}, 0)); // analyzer resolution (0.5)
-        if (numParams() != kTotalParams + 2) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
+        addParam(choiceParam("dispspd", "Display", {"Smooth", "Fast"}, 0)); // redraw trade-off (0.6)
+        if (numParams() != kTotalParams + 3) mpc::log("ContourEQ: parameter count mismatch (%d vs %d)", numParams(), kTotalParams);
 
         addPrograms();
     }
@@ -466,33 +468,43 @@ private:
     void notifierLoop()
     {
         // Only the bars on screen are reported (EQ: 160 or 80, analyzer: 80 or 40). A bar is
-        // reported when it moved about a pixel, and once more when it comes to rest, so none is
-        // left showing a stale value. While the EQ curve is moving the analyzer waits, so edits
+        // reported when it moved by the redraw step, and once more when it comes to rest, so none
+        // is left showing a stale value. While the EQ curve is moving the analyzer waits, so edits
         // get the screen's full redraw capacity.
+        //   Smooth : step ~1 pixel, every analyzer bar every frame
+        //   Fast   : step ~3 pixels, at most 20 analyzer bars per frame (taken in turn)
         float sent[2 * kNumBars], last[2 * kNumBars];
         for (int i = 0; i < 2 * kNumBars; ++i) { sent[i] = -1.0f; last[i] = -1.0f; }
-        int quietTicks = 100;
+        int quietTicks = 100, cursor = 0;
         while (running_)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(20));   // up to 50 redraws a second
             const int mode = getInt(kRefresh);
             if (mode == 1) { requestDisplayUpdate(); continue; }
             if (mode != 2) continue;
+            const bool fast = getInt(kDisplayParam) == 1;
+            const float step = fast ? 0.0069f : 0.0023f;
             const int eqStride = getInt(kBarsParam) == 1 ? 2 : 1;
             const int spStride = getInt(kAnaBarsParam) == 1 ? 4 : 2;
             bool eqMoved = false;
-            for (int i = 0; i < kNumBars; i += eqStride) eqMoved |= report(i, sent, last);
+            for (int i = 0; i < kNumBars; i += eqStride) eqMoved |= report(i, sent, last, step);
             quietTicks = eqMoved ? 0 : quietTicks + 1;
             if (quietTicks < 15) continue;                                  // analyzer pauses ~0.3 s after an edit
-            for (int i = 0; i < kNumBars; i += spStride) report(kNumBars + i, sent, last);
+            const int shown = kNumBars / spStride;
+            const int budget = fast ? std::min(20, shown) : shown;
+            for (int k = 0; k < budget; ++k)
+            {
+                cursor = (cursor + 1) % shown;
+                report(kNumBars + cursor * spStride, sent, last, step);
+            }
         }
     }
 
-    bool report(int i, float* sent, float* last)
+    bool report(int i, float* sent, float* last, float step)
     {
         const float v = getNormalised(kFirstEqBar + i);
-        const bool moved = std::fabs(v - sent[i]) > 0.0023f;              // about one pixel
-        const bool settled = v == last[i] && v != sent[i];                 // came to rest just short of a pixel
+        const bool moved = std::fabs(v - sent[i]) > step;
+        const bool settled = v == last[i] && v != sent[i];                 // came to rest short of a step
         last[i] = v;
         if (!moved && !settled) return false;
         sent[i] = v;

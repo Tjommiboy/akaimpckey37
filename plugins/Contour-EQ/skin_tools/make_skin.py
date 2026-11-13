@@ -28,10 +28,15 @@ FIRST_EQ = 29                      # parameter index of the first EQ bar (see Co
 FIRST_SP = FIRST_EQ + N_BARS
 BARS_P = FIRST_SP + N_BARS          # "Bars" (EQ resolution: 160 / 80)
 ANA_P = BARS_P + 1                  # "Ana Bars" (analyzer resolution: 80 / 40)
+DISP_P = BARS_P + 2                 # "Display" (Smooth / Fast)
+ANALYZER_P = 25                     # "Analyzer" (Off / Pre / Post)
+# quick selectors in the row under the graph: (label, param, choices, x of first button, button width)
+SELECTORS = [("ANALYZER", ANALYZER_P, ["OFF", "PRE", "POST"], 640, 92), ("DISPLAY", DISP_P, ["SMOOTH", "FAST"], 1020, 110)]
+SEL_Y, SEL_H = 436, 36
 BAND_BASE, PER_BAND = 1, 6         # Freq, Gain, Q, Shape, Slope, On
 F_MIN, F_MAX, DB = 20.0, 20000.0, 18.0
 
-GX, GY, GW, GH = 40, 10, 1200, 440 # graph area in tab coordinates (tab is 1280 x 628)
+GX, GY, GW, GH = 40, 10, 1200, 400 # graph area in tab coordinates (tab is 1280 x 628)
 BAND_COL = ["ffe8735a", "fff2b33d", "ff3fc1a5", "ff9b7bea"]
 EQ_COL, SPEC_COL = "ffece7dc", "ff1f3343"
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -73,7 +78,17 @@ def make_images(d):
         g.text((GX + 6, y - 2), "%+d" % db, fill=(110, 112, 120, 255), font=font(14), anchor="lb")
     g.line([GX, y_of(0), GX + GW, y_of(0)], fill=(85, 88, 96, 255), width=1)
     g.text((GX + 6, y_of(0) - 2), "0 dB", fill=(150, 152, 160, 255), font=font(14), anchor="lb")
+    for lab, _p, _c, x0, _w in SELECTORS:
+        g.text((x0 - 12, SEL_Y + SEL_H / 2), lab, fill=(150, 152, 160, 255), font=font(16), anchor="rm")
     bg.save(os.path.join(d, "graph_bg.png"))
+    for _lab, _p, choices, _x0, w in SELECTORS:
+        for c in choices:
+            for on in (0, 1):
+                im = Image.new("RGBA", (w, SEL_H), (0, 0, 0, 0)); g = ImageDraw.Draw(im)
+                g.rounded_rectangle([1, 1, w - 2, SEL_H - 2], radius=7, fill=(220, 214, 200, 255) if on else (34, 36, 41, 255),
+                                    outline=(120, 122, 130, 255), width=1)
+                g.text((w / 2, SEL_H / 2), c, fill=(20, 20, 22, 255) if on else (170, 172, 180, 255), font=font(16), anchor="mm")
+                im.save(os.path.join(d, "sel_%s_%s.png" % (c.lower(), "on" if on else "off")))
 
     for bw in (6, 13):
         Image.new("RGBA", (bw, GH - 2), (0, 0, 0, 0)).save(os.path.join(d, "blank_%d.png" % bw))
@@ -178,6 +193,12 @@ def graph_tab(name, template_tab, fn_key):
         comps.append(entry("pad %d" % (b + 1), "XYPad", {"version": 1, "xPositionHandle": "Parameter %d" % f,
                            "yPositionHandle": "Parameter %d" % gn, "image": "dotsel%d.png" % (b + 1)}, graph,
                            hw="Yes", invalid="Hide", extra=["IndexedEnabling/%d/4/Local/4/selBand" % b]))
+    # quick selectors: Analyzer Off/Pre/Post and Display Smooth/Fast
+    for lab, pidx, choices, x0, w in SELECTORS:
+        for k, c in enumerate(choices):
+            comps.append(entry("%s %s" % (lab.lower(), c.lower()), "Button", {"version": 2, "onImage": "sel_%s_on.png" % c.lower(),
+                               "offImage": "sel_%s_off.png" % c.lower(), "buttonId": k, "numButtonsInGroup": len(choices),
+                               "handleName": "Parameter %d" % pidx, "gestureBehaviour": "Instant"}, r(x0 + k * (w + 4), SEL_Y, w, SEL_H), hw="Yes"))
     # band buttons + readouts under the graph, one column per band (= one Q-Link column)
     for b in range(N_BANDS):
         cx = 38 + 320 * b
