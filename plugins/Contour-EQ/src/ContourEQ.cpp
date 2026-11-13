@@ -30,6 +30,9 @@
 #include "dsp/smoother.h"
 
 #include <algorithm>
+#include <atomic>
+#include <chrono>
+#include <thread>
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -152,7 +155,7 @@ public:
         info.name         = "Contour EQ";
         info.vendor       = "uP2noGood";
         info.uniqueId     = MPC_FOURCC(kUid[0], kUid[1], kUid[2], kUid[3]);   // must match plugin.json "uid"
-        info.version      = 100;     // 0.1.0.0 - test build
+        info.version      = 200;     // 0.2.0.0 - test build
         info.isInstrument = false;
         info.numInputs    = 2;
         info.numOutputs   = 2;
@@ -181,7 +184,7 @@ public:
         addParam(choiceParam("ana", "Analyzer", {"Off", "Pre", "Post"}, 2));
         addParam(choiceParam("speed", "Speed", {"Slow", "Medium", "Fast"}, 1));
         addParam(choiceParam("tilt", "Ana Tilt", {"0 dB", "3 dB", "4.5 dB"}, 2));
-        addParam(choiceParam("refresh", "Refresh", {"Normal", "Force"}, 0));   // test switch: ask the host to redraw
+        addParam(choiceParam("refresh", "Refresh", {"Normal", "Display", "Notify"}, 0));   // test switch: how to make the MPC redraw
 
         // Display-only parameters (written by the plugin, shown as bars).
         for (int i = 0; i < kNumBars; ++i)
@@ -201,8 +204,15 @@ public:
         addPrograms();
     }
 
+    ~ContourEQ() override
+    {
+        running_ = false;
+        if (notifier_.joinable()) notifier_.join();
+    }
+
     void prepare(double sampleRate, int /*maxBlockSize*/) override
     {
+        if (!notifier_.joinable()) { running_ = true; notifier_ = std::thread([this] { notifierLoop(); }); }
         sr_ = (float)sampleRate;
         output_.setTime(20.0f, sampleRate);
         output_.snap(dbToGain(get(kOutput)));
@@ -276,7 +286,7 @@ public:
         if (responseDirty_ && sinceResponse_ >= (int)(0.03f * sr_)) { writeResponse(); responseDirty_ = false; sinceResponse_ = 0; wroteSomething = true; }
         if (ana == 0 && specActive_) { for (int i = 0; i < kNumBars; ++i) { specDb_[i] = kSpecFloor; setNormalised(kFirstSpecBar + i, 0.0f); } specActive_ = false; wroteSomething = true; }
         if (specFresh_) { specFresh_ = false; wroteSomething = true; }
-        if (wroteSomething && getInt(kRefresh) == 1) requestDisplayUpdate();
+        (void)wroteSomething;   // redraw requests are made by the notifier thread, never from here
     }
 
 private:
@@ -431,6 +441,32 @@ private:
         }
     }
 
+    // Test option for MPCs that do not redraw parameters the plugin changed itself. Runs on its
+    // own thread (never the audio thread), about 25 times a second:
+    //   Display : ask the host to re-read all parameter values (audioMasterUpdateDisplay)
+    //   Notify  : report each display parameter that moved, like a knob turn (audioMasterAutomate)
+    void notifierLoop()
+    {
+        float sent[2 * kNumBars];
+        for (float& v : sent) v = -1.0f;
+        int tick = 0;
+        while (running_)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+            const int mode = getInt(kRefresh);
+            if (mode == 1) { requestDisplayUpdate(); continue; }
+            if (mode != 2) continue;
+            const bool doSpec = (++tick & 1) == 0;                 // analyzer at ~12 Hz, EQ at ~25 Hz
+            for (int i = 0; i < 2 * kNumBars; ++i)
+            {
+                if (i >= kNumBars && !doSpec) break;
+                const int idx = kFirstEqBar + i;
+                const float v = getNormalised(idx);
+                if (std::fabs(v - sent[i]) > (i < kNumBars ? 0.0005f : 0.004f)) { sent[i] = v; notifyHostParameterChanged(idx); }
+            }
+        }
+    }
+
     void addPrograms()
     {
         auto program = [this](const char* name, std::initializer_list<std::pair<int, float>> o)
@@ -472,6 +508,8 @@ private:
     float specDb_[kNumBars];
     bool specActive_ = false, specFresh_ = false;
     int holdDisplay_ = 0, anaStep_ = -1;
+    std::atomic<bool> running_{false};
+    std::thread notifier_;
 
     static constexpr char kUid[5] = "UFCA";
 };
