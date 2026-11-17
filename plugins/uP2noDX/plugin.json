@@ -1,0 +1,17 @@
+{
+  "name": "uP2noDX",
+  "manufacturer": "uP2noGood",
+  "version": "0.1.0",
+  "format": "vst2",
+  "kind": "instrument",
+  "uid": "UTPb",
+  "numInputs": 0,
+  "numOutputs": 2,
+  "category": "Synth",
+  "file32": "VST/up2nodx-arm32.so",
+  "file64": "VST/up2nodx-arm64.so",
+  "description": "6-operator FM synth with DX7 voice compatibility: 32 algorithms, 16 voices, loads DX7 .syx cartridges from Content/Cartridges. Engine: msfa (Apache-2.0).",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}

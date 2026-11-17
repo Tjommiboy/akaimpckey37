@@ -1,0 +1,17 @@
+{
+  "name": "uP2noVerb",
+  "manufacturer": "uP2noGood",
+  "version": "0.1.0",
+  "format": "vst2",
+  "kind": "effect",
+  "uid": "UQpo",
+  "numInputs": 2,
+  "numOutputs": 2,
+  "category": "Effect",
+  "file32": "VST/up2noverb-arm32.so",
+  "file64": "VST/up2noverb-arm64.so",
+  "description": "Vintage-digital style reverb: eight modes (halls, plate, room, chamber, ambience, cathedral, nonlin) and three colors (1970s, 1980s, Now).",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}

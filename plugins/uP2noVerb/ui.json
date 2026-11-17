@@ -1,0 +1,92 @@
+{
+ "kit": "cyan",
+ "pages": [
+  {
+   "name": "VERB",
+   "controls": [
+    {
+     "param": "Mix",
+     "widget": "fader"
+    },
+    {
+     "param": "Mode",
+     "widget": "slider",
+     "overlay": "menu"
+    },
+    {
+     "param": "High Freq",
+     "widget": "knob"
+    },
+    {
+     "param": "Mod Rate",
+     "widget": "knob"
+    },
+    {
+     "param": "Predelay",
+     "widget": "knob"
+    },
+    {
+     "param": "Color",
+     "widget": "switch"
+    },
+    {
+     "param": "High Shelf",
+     "widget": "knob"
+    },
+    {
+     "param": "Mod Depth",
+     "widget": "knob"
+    },
+    {
+     "param": "Decay",
+     "widget": "knob"
+    },
+    {
+     "param": "Size",
+     "widget": "knob"
+    },
+    {
+     "param": "Bass Xover",
+     "widget": "knob"
+    },
+    "empty",
+    {
+     "param": "Output",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "Attack",
+     "widget": "knob"
+    },
+    {
+     "param": "Bass Mult",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "TONE",
+   "controls": [
+    {
+     "param": "High Cut",
+     "widget": "knob"
+    },
+    {
+     "param": "Early Diff",
+     "widget": "knob"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "Low Cut",
+     "widget": "knob"
+    },
+    {
+     "param": "Late Diff",
+     "widget": "knob"
+    }
+   ]
+  }
+ ]
+}

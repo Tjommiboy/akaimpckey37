@@ -1,0 +1,17 @@
+{
+  "name": "uP2no2A",
+  "manufacturer": "uP2noGood",
+  "version": "0.1.0",
+  "format": "vst2",
+  "kind": "effect",
+  "uid": "UJFy",
+  "numInputs": 2,
+  "numOutputs": 2,
+  "category": "Effect",
+  "file32": "VST/up2no2a-arm32.so",
+  "file64": "VST/up2no2a-arm64.so",
+  "description": "Electro-optical tube leveling amplifier in the spirit of the classic 1960s two-knob leveler: Peak Reduction and Gain, Compress/Limit, VU meter, program-dependent two-stage release.",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}

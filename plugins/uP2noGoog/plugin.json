@@ -1,0 +1,17 @@
+{
+  "name": "uP2noGoog",
+  "manufacturer": "uP2noGood",
+  "version": "0.2.2",
+  "format": "vst2",
+  "kind": "instrument",
+  "uid": "UD7V",
+  "numInputs": 0,
+  "numOutputs": 2,
+  "category": "Synth",
+  "file32": "VST/up2nogoog-arm32.so",
+  "file64": "VST/up2nogoog-arm64.so",
+  "description": "Monophonic 3-oscillator synth in the spirit of the 1970s Minimoog Model D: six waves per oscillator, Osc 3 as LFO, 5-channel overdriving mixer with feedback, 24 dB ladder filter, two contours with Decay switch, glide, velocity and aftertouch.",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}

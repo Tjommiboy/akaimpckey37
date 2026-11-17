@@ -1,0 +1,757 @@
+{
+ "kit": "lime",
+ "pages": [
+  {
+   "name": "OP 1",
+   "controls": [
+    {
+     "param": "OP1 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP1 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP1 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP1 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP1 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP1 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP1 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "OP 2",
+   "controls": [
+    {
+     "param": "OP2 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP2 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP2 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP2 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP2 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP2 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP2 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "OP 3",
+   "controls": [
+    {
+     "param": "OP3 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP3 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP3 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP3 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP3 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP3 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP3 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "OP 4",
+   "controls": [
+    {
+     "param": "OP4 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP4 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP4 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP4 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP4 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP4 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP4 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "OP 5",
+   "controls": [
+    {
+     "param": "OP5 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP5 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP5 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP5 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP5 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP5 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP5 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "OP 6",
+   "controls": [
+    {
+     "param": "OP6 R1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 L1",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "OP6 Level",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 R2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 L2",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 Coarse",
+     "widget": "knob"
+    },
+    {
+     "param": "OP6 Velo",
+     "widget": "knob"
+    },
+    {
+     "param": "OP6 R3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 L3",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 Fine",
+     "widget": "knob"
+    },
+    {
+     "param": "OP6 AMS",
+     "widget": "knob"
+    },
+    {
+     "param": "OP6 R4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 L4",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 Detune",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "OP6 RateScl",
+     "widget": "knob"
+    }
+   ]
+  },
+  {
+   "name": "SCL 1",
+   "controls": [
+    {
+     "param": "OP1 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP1 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP1 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP1 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP1 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "SCL 2",
+   "controls": [
+    {
+     "param": "OP2 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP2 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP2 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP2 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP2 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "SCL 3",
+   "controls": [
+    {
+     "param": "OP3 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP3 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP3 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP3 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP3 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "SCL 4",
+   "controls": [
+    {
+     "param": "OP4 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP4 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP4 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP4 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP4 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "SCL 5",
+   "controls": [
+    {
+     "param": "OP5 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP5 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP5 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP5 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP5 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "SCL 6",
+   "controls": [
+    {
+     "param": "OP6 BrkPt",
+     "widget": "knob"
+    },
+    {
+     "param": "OP6 R Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 On",
+     "widget": "switch"
+    },
+    "empty",
+    {
+     "param": "OP6 L Depth",
+     "widget": "fader"
+    },
+    {
+     "param": "OP6 R Curve",
+     "widget": "switch"
+    },
+    "empty",
+    "empty",
+    {
+     "param": "OP6 L Curve",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "MOD",
+   "controls": [
+    {
+     "param": "PEG R1",
+     "widget": "fader"
+    },
+    {
+     "param": "PEG L1",
+     "widget": "fader"
+    },
+    {
+     "param": "LFO Wave",
+     "widget": "slider",
+     "overlay": "menu"
+    },
+    {
+     "param": "LFO PMD",
+     "widget": "knob"
+    },
+    {
+     "param": "PEG R2",
+     "widget": "fader"
+    },
+    {
+     "param": "PEG L2",
+     "widget": "fader"
+    },
+    {
+     "param": "LFO Speed",
+     "widget": "knob"
+    },
+    {
+     "param": "LFO AMD",
+     "widget": "knob"
+    },
+    {
+     "param": "PEG R3",
+     "widget": "fader"
+    },
+    {
+     "param": "PEG L3",
+     "widget": "fader"
+    },
+    {
+     "param": "LFO Delay",
+     "widget": "knob"
+    },
+    {
+     "param": "Pitch Sens",
+     "widget": "knob"
+    },
+    {
+     "param": "PEG R4",
+     "widget": "fader"
+    },
+    {
+     "param": "PEG L4",
+     "widget": "fader"
+    },
+    {
+     "param": "LFO Sync",
+     "widget": "switch"
+    },
+    {
+     "param": "Osc Sync",
+     "widget": "switch"
+    }
+   ]
+  },
+  {
+   "name": "VOICE",
+   "controls": [
+    {
+     "param": "Algorithm",
+     "widget": "knob"
+    },
+    {
+     "param": "Poly/Mono",
+     "widget": "switch"
+    },
+    {
+     "param": "Wheel Range",
+     "widget": "knob"
+    },
+    {
+     "param": "AT Range",
+     "widget": "knob"
+    },
+    {
+     "param": "Feedback",
+     "widget": "knob"
+    },
+    {
+     "param": "Bend Range",
+     "widget": "knob"
+    },
+    {
+     "param": "Wheel>Pitch",
+     "widget": "switch"
+    },
+    {
+     "param": "AT>Pitch",
+     "widget": "switch"
+    },
+    {
+     "param": "Transpose",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "Porta On",
+     "widget": "switch"
+    },
+    {
+     "param": "Wheel>Amp",
+     "widget": "switch"
+    },
+    {
+     "param": "AT>Amp",
+     "widget": "switch"
+    },
+    {
+     "param": "Volume",
+     "widget": "knob"
+    },
+    {
+     "param": "Porta Time",
+     "widget": "knob"
+    },
+    {
+     "param": "Wheel>EG",
+     "widget": "switch"
+    },
+    {
+     "param": "AT>EG",
+     "widget": "switch"
+    }
+   ]
+  }
+ ]
+}

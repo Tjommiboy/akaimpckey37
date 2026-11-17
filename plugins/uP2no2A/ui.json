@@ -1,0 +1,44 @@
+{
+ "kit": "mono",
+ "pages": [
+  {
+   "name": "MAIN",
+   "controls": [
+    {
+     "param": "Gain",
+     "widget": "knob"
+    },
+    {
+     "param": "Peak Red",
+     "widget": "knob"
+    },
+    {
+     "param": "Mode",
+     "widget": "switch"
+    },
+    {
+     "param": "Meter",
+     "widget": "slider",
+     "overlay": "menu"
+    },
+    {
+     "param": "Emphasis",
+     "widget": "knob"
+    },
+    {
+     "param": "Stereo Link",
+     "widget": "switch"
+    },
+    {
+     "param": "Output",
+     "widget": "knob",
+     "polarity": "bipolar"
+    },
+    {
+     "param": "Power",
+     "widget": "switch"
+    }
+   ]
+  }
+ ]
+}

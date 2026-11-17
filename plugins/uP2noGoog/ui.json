@@ -1,0 +1,264 @@
+{
+  "kit": "cyan",
+  "pages": [
+    {
+      "name": "OSC",
+      "controls": [
+        {
+          "param": "Osc1 Range",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "Osc2 Range",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "Osc3 Range",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "Drift",
+          "widget": "knob"
+        },
+        {
+          "param": "Tune",
+          "widget": "knob",
+          "polarity": "bipolar"
+        },
+        {
+          "param": "Osc2 Freq",
+          "widget": "knob",
+          "polarity": "bipolar"
+        },
+        {
+          "param": "Osc3 Freq",
+          "widget": "knob",
+          "polarity": "bipolar"
+        },
+        {
+          "param": "Osc3 Ctrl",
+          "widget": "switch"
+        },
+        {
+          "param": "Osc1 Wave",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "Osc2 Wave",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "Osc3 Wave",
+          "widget": "slider",
+          "overlay": "menu"
+        },
+        {
+          "param": "A-440",
+          "widget": "switch"
+        },
+        {
+          "param": "Osc1 Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Osc2 Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Osc3 Vol",
+          "widget": "fader"
+        }
+      ]
+    },
+    {
+      "name": "MIXER",
+      "controls": [
+        {
+          "param": "Osc1 Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Osc1 On",
+          "widget": "switch"
+        },
+        {
+          "param": "Fdbk Vol",
+          "widget": "fader"
+        },
+        "empty",
+        {
+          "param": "Osc2 Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Osc2 On",
+          "widget": "switch"
+        },
+        {
+          "param": "Fdbk On",
+          "widget": "switch"
+        },
+        "empty",
+        {
+          "param": "Osc3 Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Osc3 On",
+          "widget": "switch"
+        },
+        {
+          "param": "Noise Col",
+          "widget": "switch"
+        },
+        "empty",
+        {
+          "param": "Noise Vol",
+          "widget": "fader"
+        },
+        {
+          "param": "Noise On",
+          "widget": "switch"
+        },
+        {
+          "param": "Drive",
+          "widget": "knob"
+        }
+      ]
+    },
+    {
+      "name": "FILTER",
+      "controls": [
+        {
+          "param": "Cutoff",
+          "widget": "knob"
+        },
+        {
+          "param": "F Attack",
+          "widget": "fader"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Emphasis",
+          "widget": "knob"
+        },
+        {
+          "param": "F Decay",
+          "widget": "fader"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Contour Amt",
+          "widget": "knob"
+        },
+        {
+          "param": "F Sustain",
+          "widget": "fader"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Kbd Ctrl 1",
+          "widget": "switch"
+        },
+        {
+          "param": "Kbd Ctrl 2",
+          "widget": "switch"
+        }
+      ]
+    },
+    {
+      "name": "AMP",
+      "controls": [
+        {
+          "param": "L Attack",
+          "widget": "fader"
+        },
+        {
+          "param": "Volume",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "L Decay",
+          "widget": "fader"
+        },
+        {
+          "param": "Velo>Loud",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "L Sustain",
+          "widget": "fader"
+        },
+        {
+          "param": "Velo>Filt",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Decay Sw",
+          "widget": "switch"
+        },
+        {
+          "param": "Glide On",
+          "widget": "switch"
+        }
+      ]
+    },
+    {
+      "name": "MOD",
+      "controls": [
+        {
+          "param": "Mod Mix",
+          "widget": "knob"
+        },
+        {
+          "param": "Glide",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Mod Amt",
+          "widget": "knob"
+        },
+        {
+          "param": "Bend Range",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Osc Mod",
+          "widget": "switch"
+        },
+        {
+          "param": "AT>Mod",
+          "widget": "knob"
+        },
+        "empty",
+        "empty",
+        {
+          "param": "Filter Mod",
+          "widget": "switch"
+        },
+        {
+          "param": "AT>Filt",
+          "widget": "knob"
+        }
+      ]
+    }
+  ]
+}

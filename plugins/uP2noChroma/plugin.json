@@ -1,0 +1,17 @@
+{
+  "name": "uP2noChroma",
+  "manufacturer": "uP2noGood",
+  "version": "0.1.0",
+  "format": "vst2",
+  "kind": "effect",
+  "uid": "Ukl6",
+  "numInputs": 2,
+  "numOutputs": 2,
+  "category": "Effect",
+  "file32": "VST/up2nochroma-arm32.so",
+  "file64": "VST/up2nochroma-arm64.so",
+  "description": "Four-module colour and lo-fi multi-effect in the spirit of the Chroma Console: Character, Movement, Diffusion and Texture, 20 effects, any order, tempo sync.",
+  "author": "uP2noGood",
+  "url": "",
+  "license": "MIT"
+}

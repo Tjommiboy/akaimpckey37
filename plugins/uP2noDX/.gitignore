@@ -1,0 +1,6 @@
+build/
+dist/
+
+# DX7 cartridges are the user's own files: never commit them
+Content/Cartridges/*.syx
+Content/Cartridges/*.SYX

@@ -1,0 +1,60 @@
+{
+ "kit": "mono",
+ "pages": [
+  {
+   "name": "CONSOLE",
+   "controls": [
+    { "param": "Tilt", "widget": "knob", "polarity": "bipolar" },
+    { "param": "Rate", "widget": "knob" },
+    { "param": "Time", "widget": "knob" },
+    { "param": "Tex Amt", "widget": "knob" },
+    { "param": "Char Amt", "widget": "knob" },
+    { "param": "Move Amt", "widget": "knob" },
+    { "param": "Diff Amt", "widget": "knob" },
+    { "param": "Tex Vol", "widget": "knob", "polarity": "unipolar" },
+    { "param": "Sensitivity", "widget": "knob", "polarity": "bipolar" },
+    { "param": "Move Drift", "widget": "knob" },
+    { "param": "Diff Drift", "widget": "knob" },
+    { "param": "Filter Style", "widget": "switch" },
+    { "param": "Char Vol", "widget": "knob", "polarity": "unipolar" },
+    { "param": "Move Vol", "widget": "knob", "polarity": "unipolar" },
+    { "param": "Diff Vol", "widget": "knob", "polarity": "unipolar" },
+    { "param": "Tex Drift", "widget": "knob" }
+   ]
+  },
+  {
+   "name": "SETUP",
+   "controls": [
+    { "param": "Move Sync", "widget": "switch" },
+    { "param": "Diff Sync", "widget": "switch" },
+    { "param": "Tex Tone", "widget": "knob", "polarity": "bipolar" },
+    { "param": "Mix", "widget": "knob" },
+    { "param": "Move Div", "widget": "slider", "overlay": "menu" },
+    { "param": "Diff Div", "widget": "slider", "overlay": "menu" },
+    "empty",
+    { "param": "Output", "widget": "knob", "polarity": "bipolar" },
+    { "param": "Spread", "widget": "knob" },
+    { "param": "Ping-Pong", "widget": "switch" },
+    "empty",
+    { "param": "Input Level", "widget": "switch" },
+    "empty",
+    { "param": "Duck", "widget": "knob" },
+    "empty",
+    { "param": "Routing", "widget": "slider", "overlay": "menu" }
+   ]
+  },
+  {
+   "name": "FX",
+   "controls": [
+    { "param": "Char FX", "widget": "slider", "overlay": "menu" },
+    { "param": "Move FX", "widget": "slider", "overlay": "menu" },
+    { "param": "Diff FX", "widget": "slider", "overlay": "menu" },
+    { "param": "Tex FX", "widget": "slider", "overlay": "menu" },
+    { "param": "Char On", "widget": "switch" },
+    { "param": "Move On", "widget": "switch" },
+    { "param": "Diff On", "widget": "switch" },
+    { "param": "Tex On", "widget": "switch" }
+   ]
+  }
+ ]
+}
